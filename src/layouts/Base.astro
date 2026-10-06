@@ -1,0 +1,138 @@
+---
+import '../styles/global.css';
+import '@fontsource/barlow-condensed/latin-600.css';
+import '@fontsource/barlow-condensed/latin-700.css';
+import '@fontsource/source-sans-3/latin-400.css';
+import '@fontsource/source-sans-3/latin-600.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/business';
+import { abs, path as toPath } from '../lib/paths';
+import { breadcrumbSchema, electricianSchema, graph, webPageSchema } from '../lib/schema';
+
+interface Crumb {
+  name: string;
+  path: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  crumbs?: Crumb[];
+  extraSchema?: Record<string, unknown>[];
+  noindex?: boolean;
+  home?: boolean;
+}
+
+const { title, description, path, crumbs = [], extraSchema = [], noindex = false, home = false } = Astro.props;
+const canonical = abs(path);
+const fullTitle = title.includes(site.name) ? title : `${title} | ${site.name}`;
+const nodes = [
+  electricianSchema(),
+  webPageSchema(fullTitle, description, path),
+  ...(crumbs.length ? [breadcrumbSchema(crumbs)] : []),
+  ...extraSchema,
+];
+const jsonLd = graph(nodes);
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, follow" />}
+    <meta name="theme-color" content="#0e1624" />
+    <meta name="geo.region" content="GB-BDF" />
+    <meta name="geo.placename" content="Kempston" />
+    <link rel="alternate" hreflang="en-gb" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
+    <link rel="icon" href={toPath('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={toPath('/favicon-32.png')} type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href={toPath('/favicon.png')} />
+    <link rel="manifest" href={toPath('/site.webmanifest')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={`${site.url}/images/og.jpg`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Electrician working on an outdoor electrical box. Illustration, not a Hurley staff photo." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${site.url}/images/og.jpg`} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body class={home ? 'home' : 'inner'}>
+    <a class="skip" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <script is:inline>
+      const header = document.querySelector('.site-header');
+      const toggle = document.querySelector('.nav-toggle');
+      const nav = document.querySelector('.site-nav');
+      if (toggle && nav) {
+        toggle.addEventListener('click', () => {
+          const open = nav.classList.toggle('is-open');
+          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      }
+      if (header && document.body.classList.contains('home')) {
+        const onScroll = () => header.classList.toggle('is-solid', window.scrollY > 20);
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+      }
+      document.querySelectorAll('[data-quote-form]').forEach((form) => {
+        form.addEventListener('submit', async (event) => {
+          const data = new FormData(form);
+          if (String(data.get('_honey') || '').trim()) {
+            event.preventDefault();
+            const next = form.querySelector('input[name="_next"]');
+            window.location.href = next && next.value ? next.value : '/contact/thanks';
+            return;
+          }
+          const name = String(data.get('name') || '').trim();
+          const email = String(data.get('email') || '').trim();
+          const message = String(data.get('message') || '').trim();
+          const error = form.querySelector('[data-error]');
+          if (!name || !email || !message) {
+            event.preventDefault();
+            if (error) error.textContent = 'Add your name, email, and a short note about the job.';
+            return;
+          }
+          if (!window.fetch) return;
+          event.preventDefault();
+          const button = form.querySelector('button[type="submit"]');
+          if (button) button.disabled = true;
+          try {
+            const payload = Object.fromEntries(data.entries());
+            const response = await fetch('https://formsubmit.co/ajax/info@hurleyltd.co.uk', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+              body: JSON.stringify(payload),
+            });
+            if (!response.ok) throw new Error('not ok');
+            const next = form.querySelector('input[name="_next"]');
+            window.location.href = next && next.value ? next.value : '/contact/thanks';
+          } catch (err) {
+            if (button) button.disabled = false;
+            if (error) {
+              error.textContent = 'The form did not send. Phone 01234 857772 or email info@hurleyltd.co.uk.';
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

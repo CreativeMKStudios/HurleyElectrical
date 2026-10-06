@@ -1,0 +1,56 @@
+---
+import { areas, services } from '../data/business';
+import { currentPath, path } from '../lib/paths';
+
+const here = currentPath(Astro.url.pathname);
+const on = (href: string) => (href === '/' ? here === '/' : here === href || here.startsWith(`${href}/`));
+---
+
+<header class="site-header">
+  <div class="wrap header-bar">
+    <a class="logo" href={path('/')} aria-label="Hurley Electrical, home">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <rect width="32" height="32" rx="8" fill="#e10600"></rect>
+        <path fill="#fff" d="M18.2 3.2 10.4 17.2h5.2L12.6 28.8 23.2 13.4h-5.6L18.2 3.2z"></path>
+      </svg>
+      <span>
+        <strong>Hurley</strong>
+        <small>Electrical</small>
+      </span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <a href={path('/')} aria-current={on('/') ? 'page' : undefined}>Home</a>
+      <a href={path('/about')} aria-current={on('/about') ? 'page' : undefined}>About</a>
+      <div class="drop">
+        <a href={path('/services')} aria-current={on('/services') ? 'page' : undefined}>Services</a>
+        <div class="sub">
+          <a href={path('/services')}>All services</a>
+          {services.map((service) => (
+            <a href={path(`/services/${service.slug}`)}>{service.title}</a>
+          ))}
+        </div>
+      </div>
+      <a href={path('/projects')} aria-current={on('/projects') ? 'page' : undefined}>Projects</a>
+      <div class="drop">
+        <a href={path('/areas')} aria-current={on('/areas') ? 'page' : undefined}>Areas</a>
+        <div class="sub">
+          <a href={path('/areas')}>All areas</a>
+          {areas.map((area) => (
+            <a href={path(`/areas/${area.slug}`)}>{area.name}</a>
+          ))}
+        </div>
+      </div>
+      <a href={path('/reviews')} aria-current={on('/reviews') ? 'page' : undefined}>Reviews</a>
+      <a href={path('/contact')} aria-current={on('/contact') ? 'page' : undefined}>Contact</a>
+    </nav>
+    <a class="btn header-cta" href={path('/contact')}>
+      Request a quote
+      <span class="arrow" aria-hidden="true">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span>
+    </a>
+  </div>
+</header>

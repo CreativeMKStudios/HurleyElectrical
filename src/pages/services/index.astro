@@ -1,0 +1,51 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { faqs, services } from '../../data/business';
+import { path } from '../../lib/paths';
+
+const title = 'Electrical services in Kempston';
+const description = 'Electrical installation, emergency lighting servicing, and repairs from Hurley Electrical in Kempston. Plain descriptions of the work we can evidence.';
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Services', path: '/services' },
+];
+---
+
+<Base title={title} description={description} path="/services" crumbs={crumbs}>
+  <PageHero
+    eyebrow="Services"
+    title="What we do"
+    lede="Installation, emergency lighting, and repairs. We have left out trades we cannot show from the company record or from customer reviews."
+    crumbs={crumbs}
+  />
+  <section class="section">
+    <div class="wrap service-list">
+      {services.map((service) => (
+        <article class="service-row">
+          <img src={path(service.image)} width={service.width} height={service.height} alt={service.alt} loading="lazy" />
+          <div class="service-copy">
+            <h2 style="font-family:var(--display);text-transform:uppercase;font-size:2rem;margin-bottom:0.4rem">{service.title}</h2>
+            <p>{service.lede}</p>
+            <p style="margin-top:1rem"><a class="btn btn-line" href={path(`/services/${service.slug}`)}>Read more <span class="arrow" aria-hidden="true">→</span></a></p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <h2>Questions people ask</h2>
+      <div class="faq" style="margin-top:1rem">
+        {faqs.map((item) => (
+          <details>
+            <summary>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+  <CtaBand />
+</Base>

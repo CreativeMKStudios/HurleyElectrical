@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+
+const title = 'Cookies';
+const description = 'This Hurley Electrical website does not set analytics or advertising cookies.';
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Cookies', path: '/cookies' },
+];
+---
+
+<Base title={title} description={description} path="/cookies" crumbs={crumbs}>
+  <PageHero title="Cookies" lede="Short version: we do not use tracking cookies on this site." crumbs={crumbs} />
+  <section class="section">
+    <div class="wrap prose prose-card" style="max-width:760px">
+      <p>A cookie is a small file a site can store on your phone or computer. This site does not set analytics cookies, and it does not set advertising cookies. There is no cookie banner, because there is nothing to opt in to.</p>
+      <p>The quote form sends your message when you press the button. That is a form, not a tracking cookie. The map on the contact page is loaded from Google. Google may set its own cookies when that map loads. You can read their policy at policies.google.com.</p>
+      <p>If we add a stats tool later, we will update this page first, and we will ask before any cookie that is not strictly needed.</p>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { areas, services, site } from '../../data/business';
+import { path } from '../../lib/paths';
+
+export function getStaticPaths() {
+  return areas.map((area) => ({ params: { slug: area.slug }, props: { area } }));
+}
+
+const { area } = Astro.props;
+const pagePath = `/areas/${area.slug}`;
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Areas', path: '/areas' },
+  { name: area.name, path: pagePath },
+];
+const description = area.slug === 'kempston'
+  ? 'Electrician in Kempston. Hurley Electrical is based at 18 Singer Way on the Woburn Road Industrial Estate. Call 01234 857772.'
+  : `Electrician near ${area.name}. Hurley Electrical’s workshop is in Kempston, ${area.distance.toLowerCase()}. Call 01234 857772.`;
+---
+
+<Base title={`Electrician near ${area.name}`} description={description} path={pagePath} crumbs={crumbs}>
+  <PageHero eyebrow={area.distance} title={area.name} lede={area.lede} crumbs={crumbs} />
+  <section class="section">
+    <div class="wrap" style="display:grid;gap:1rem">
+      <article class="prose prose-card">
+        {area.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        <h2>Work we do from Kempston</h2>
+        <ul>
+          {services.map((service) => (
+            <li><a href={path(`/services/${service.slug}`)}>{service.title}</a>. {service.short}</li>
+          ))}
+        </ul>
+        <p>The workshop is 18 Singer Way, Kempston, MK42 7AE. Phone <a href={`tel:${site.phoneTel}`}>{site.phoneDisplay}</a>.</p>
+        <p><a class="btn btn-navy" href={path('/contact')}>Ask about a job in {area.name} <span class="arrow" aria-hidden="true">→</span></a></p>
+      </article>
+      <div class="area-grid">
+        {areas.filter((item) => item.slug !== area.slug).map((item) => (
+          <a class="area-card" href={path(`/areas/${item.slug}`)} style="text-decoration:none">
+            <p class="kicker">{item.distance}</p>
+            <h2 style="font-size:1.2rem;margin:0">{item.name}</h2>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+  <CtaBand />
+</Base>

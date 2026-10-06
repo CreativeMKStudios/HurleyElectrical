@@ -1,0 +1,59 @@
+---
+import { services, site } from '../data/business';
+interface Props {
+  id?: string;
+  heading?: string;
+}
+const { id = 'quote', heading = 'Tell us about the job' } = Astro.props;
+---
+
+<form
+  id={id}
+  class="panel panel-light"
+  data-quote-form
+  action="https://formsubmit.co/info@hurleyltd.co.uk"
+  method="POST"
+>
+  <h2>{heading}</h2>
+  <p class="form-help" style="margin-top:0">We reply by phone or email. The form does not book a time by itself.</p>
+  <div class="form-grid two">
+    <label>
+      Full name
+      <input name="name" type="text" autocomplete="name" required maxlength="80" />
+    </label>
+    <label>
+      Email
+      <input name="email" type="email" autocomplete="email" required maxlength="120" />
+    </label>
+    <label>
+      Phone
+      <input name="phone" type="tel" autocomplete="tel" maxlength="30" />
+    </label>
+    <label>
+      Service
+      <select name="service">
+        <option value="Not sure yet">Not sure yet</option>
+        {services.map((service) => (
+          <option value={service.title}>{service.title}</option>
+        ))}
+      </select>
+    </label>
+    <label style="grid-column: 1 / -1">
+      What do you need?
+      <textarea name="message" required maxlength="2000" placeholder="Address, and a short note about the job"></textarea>
+    </label>
+  </div>
+  <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
+  <input type="hidden" name="_subject" value="Quote request from the Hurley Electrical website" />
+  <input type="hidden" name="_template" value="table" />
+  <input type="hidden" name="_captcha" value="false" />
+  <input type="hidden" name="_next" value={`${site.url}/contact/thanks`} />
+  <p class="form-error" data-error role="alert"></p>
+  <button class="btn btn-full" type="submit" style="margin-top:0.8rem">
+    Request a quote
+    <span class="arrow" aria-hidden="true">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+  </button>
+  <p class="form-help">Or call <a href={`tel:${site.phoneTel}`}>{site.phoneDisplay}</a>.</p>
+</form>

@@ -1,0 +1,52 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { address, hours, registeredOffice, site } from '../data/business';
+
+const title = 'Contact Hurley Electrical';
+const description = 'Call Hurley Electrical on 01234 857772 or write to 18 Singer Way, Kempston, Bedford, MK42 7AE. Email info@hurleyltd.co.uk.';
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Contact', path: '/contact' },
+];
+const map = `https://maps.google.com/maps?q=${site.geo.lat},${site.geo.lng}&z=16&output=embed`;
+---
+
+<Base title={title} description={description} path="/contact" crumbs={crumbs}>
+  <PageHero
+    eyebrow="Kempston"
+    title="Contact us"
+    lede="Phone is the fastest way. The form comes to info@hurleyltd.co.uk. The workshop is on Singer Way."
+    crumbs={crumbs}
+  />
+  <section class="section">
+    <div class="wrap" style="display:grid;gap:1rem">
+      <div class="overlap-grid">
+        <div class="prose-card prose">
+          <h2>Workshop</h2>
+          <address>
+            {address.street}<br />
+            {address.estate}<br />
+            {address.locality}<br />
+            {address.town}<br />
+            {address.postcode}
+          </address>
+          <p><a href={`tel:${site.phoneTel}`}>{site.phoneDisplay}</a></p>
+          <p><a href={`mailto:${site.email}`}>{site.email}</a></p>
+          <p>Fax on our old website: {site.fax}. The BSI listing also gives {site.bsiEmail} for that certificate.</p>
+          <h2>Registered office</h2>
+          <p>{registeredOffice.oneLine}. This is the Companies House address. It is not the place to meet an engineer.</p>
+          <h2>Hours listed on Google</h2>
+          <ul>
+            {hours.map((day) => <li>{day}: open 24 hours</li>)}
+          </ul>
+          <p>Call first. We will tell you if someone can come.</p>
+          <p><a href={site.googleMaps}>Directions on Google Maps</a></p>
+        </div>
+        <QuoteForm id="contact-quote" heading="Send a message" />
+      </div>
+      <iframe class="map-frame" title="Map of Hurley Electrical at 18 Singer Way, Kempston" src={map} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </section>
+</Base>

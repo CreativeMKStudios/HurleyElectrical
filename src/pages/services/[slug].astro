@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { services } from '../../data/business';
+import { path } from '../../lib/paths';
+import { serviceSchema } from '../../lib/schema';
+
+export function getStaticPaths() {
+  return services.map((service) => ({ params: { slug: service.slug }, props: { service } }));
+}
+
+const { service } = Astro.props;
+const pagePath = `/services/${service.slug}`;
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Services', path: '/services' },
+  { name: service.title, path: pagePath },
+];
+const description = `${service.title} by Hurley Electrical, 18 Singer Way, Kempston. ${service.short} Call 01234 857772.`;
+---
+
+<Base title={service.title} description={description} path={pagePath} crumbs={crumbs} extraSchema={[serviceSchema(service)]}>
+  <PageHero eyebrow="Services" title={service.title} lede={service.lede} crumbs={crumbs} />
+  <section class="section">
+    <div class="wrap" style="display:grid;gap:1.2rem">
+      <img src={path(service.image)} width={service.width} height={service.height} alt={service.alt} style="width:100%;border-radius:18px;max-height:460px;object-fit:cover" />
+      <div class="prose prose-card">
+        {service.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        <p><a class="btn btn-navy" href={path('/contact')}>Request a quote <span class="arrow" aria-hidden="true">→</span></a></p>
+      </div>
+    </div>
+  </section>
+  <CtaBand />
+</Base>

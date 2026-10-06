@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import { registeredOffice, site } from '../data/business';
+
+const title = 'Privacy notice';
+const description = 'How Hurley Electrical uses the name, phone number, email, and job details you send on this website.';
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Privacy', path: '/privacy' },
+];
+---
+
+<Base title={title} description={description} path="/privacy" crumbs={crumbs}>
+  <PageHero title="Privacy" lede="This notice is about this website only. It is written in plain words." crumbs={crumbs} />
+  <section class="section">
+    <div class="wrap prose prose-card" style="max-width:760px">
+      <p>The company is {site.legalName}, number {site.companyNumber}. The registered office is {registeredOffice.oneLine}. For a privacy question, email {site.email} or write to 18 Singer Way, Kempston, Bedford, MK42 7AE.</p>
+      <h2>What you send us</h2>
+      <p>The quote form asks for your name, email, phone number, the type of work, and a note about the job. You choose to send it so we can reply about that job. That is the reason we use it. We do not sell the details, and we do not use them for a mailing list.</p>
+      <h2>Who else sees the form</h2>
+      <p>The form is delivered by FormSubmit, which emails the message to {site.email}. Their service handles the send. If you would rather not use the form, phone {site.phoneDisplay}.</p>
+      <h2>How long we keep it</h2>
+      <p>We keep the message for as long as we need it to quote, do the work, or meet a legal duty such as a tax record. Then we delete it or file it with the job papers.</p>
+      <h2>Your choices</h2>
+      <p>You can ask what we hold about you, ask us to correct it, or ask us to delete it if we have no duty to keep it. Write to {site.email}. You can also complain to the Information Commissioner’s Office at ico.org.uk.</p>
+      <h2>This website</h2>
+      <p>The site does not run advertising trackers, and it does not set analytics cookies. See the cookie page for the short version.</p>
+    </div>
+  </section>
+</Base>
