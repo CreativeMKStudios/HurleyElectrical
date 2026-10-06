@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.hurleyltd.co.uk/sitemap-index.xml
+Sitemap: https://creativemkstudios.github.io/HurleyElectrical/sitemap-index.xml

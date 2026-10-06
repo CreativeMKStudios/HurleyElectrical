@@ -13,7 +13,7 @@ export const site = {
   incorporated: '4 October 2007',
   sic: '43210',
   sicLabel: 'Electrical installation',
-  url: 'https://www.hurleyltd.co.uk',
+  url: 'https://creativemkstudios.github.io/HurleyElectrical',
   email: 'info@hurleyltd.co.uk',
   bsiEmail: 'kenton@hurleyltd.co.uk',
   phoneDisplay: '01234 857772',

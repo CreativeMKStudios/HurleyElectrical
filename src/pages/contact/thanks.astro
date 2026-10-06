@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import { site } from '../../data/business';
+import { path } from '../../lib/paths';
 
 const title = 'Message sent';
 const description = 'Your note to Hurley Electrical has been sent. If you need a faster answer, call 01234 857772.';
@@ -21,7 +22,7 @@ const crumbs = [
   <section class="section">
     <div class="wrap prose prose-card" style="max-width:720px">
       <p>If the job is urgent, do not wait on the form. Call <a href={`tel:${site.phoneTel}`}>{site.phoneDisplay}</a>.</p>
-      <p><a class="btn btn-navy" href="/">Back to the home page <span class="arrow" aria-hidden="true">→</span></a></p>
+      <p><a class="btn btn-navy" href={path('/')}>Back to the home page <span class="arrow" aria-hidden="true">→</span></a></p>
     </div>
   </section>
 </Base>

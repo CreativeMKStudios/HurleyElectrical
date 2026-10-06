@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import PageHero from '../../components/PageHero.astro';
 import CtaBand from '../../components/CtaBand.astro';
 import { faqs, services } from '../../data/business';
+import { path } from '../../lib/paths';
 
 const title = 'Electrical services in Kempston';
 const description = 'Electrical installation, emergency lighting servicing, and repairs from Hurley Electrical in Kempston. Plain descriptions of the work we can evidence.';
@@ -23,11 +24,11 @@ const crumbs = [
     <div class="wrap service-list">
       {services.map((service) => (
         <article class="service-row">
-          <img src={service.image} width={service.width} height={service.height} alt={service.alt} loading="lazy" />
+          <img src={path(service.image)} width={service.width} height={service.height} alt={service.alt} loading="lazy" />
           <div class="service-copy">
             <h2 style="font-family:var(--display);text-transform:uppercase;font-size:2rem;margin-bottom:0.4rem">{service.title}</h2>
             <p>{service.lede}</p>
-            <p style="margin-top:1rem"><a class="btn btn-line" href={`/services/${service.slug}`}>Read more <span class="arrow" aria-hidden="true">→</span></a></p>
+            <p style="margin-top:1rem"><a class="btn btn-line" href={path(`/services/${service.slug}`)}>Read more <span class="arrow" aria-hidden="true">→</span></a></p>
           </div>
         </article>
       ))}

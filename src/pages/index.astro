@@ -4,6 +4,7 @@ import QuoteForm from '../components/QuoteForm.astro';
 import CtaBand from '../components/CtaBand.astro';
 import Reviews from '../components/Reviews.astro';
 import { areas, faqs, hours, people, reviews, services, site, steps } from '../data/business';
+import { path } from '../lib/paths';
 import { faqSchema } from '../lib/schema';
 
 const title = 'Electrician in Kempston and Bedford';
@@ -13,7 +14,7 @@ const shown = reviews.filter((review) => review.stars === 5).slice(0, 3);
 
 <Base title={title} description={description} path="/" home extraSchema={[faqSchema()]}>
   <section class="hero">
-    <img class="bg" src="/images/hero.webp" width="1600" height="1067" alt="An electrician in a hard hat working on an outdoor electrical box. Illustration, not a Hurley staff photo." fetchpriority="high" />
+    <img class="bg" src={path('/images/hero.webp')} width="1600" height="1067" alt="An electrician in a hard hat working on an outdoor electrical box. Illustration, not a Hurley staff photo." fetchpriority="high" />
     <div class="shade"></div>
     <div class="wrap hero-copy">
       <p class="eyebrow">Kempston · Bedford · MK42</p>
@@ -74,7 +75,7 @@ const shown = reviews.filter((review) => review.stars === 5).slice(0, 3);
       <div class="service-list" style="margin-top:1.4rem">
         {services.map((service, index) => (
           <article class:list={['service-row', index % 2 === 1 && 'reverse']}>
-            <img src={service.image} width={service.width} height={service.height} alt={service.alt} loading="lazy" />
+            <img src={path(service.image)} width={service.width} height={service.height} alt={service.alt} loading="lazy" />
             <div class="service-copy">
               <h3>{service.title}</h3>
               <p>{service.short}</p>
@@ -86,7 +87,7 @@ const shown = reviews.filter((review) => review.stars === 5).slice(0, 3);
                   </li>
                 ))}
               </ul>
-              <a class="btn btn-line" href={`/services/${service.slug}`}>
+              <a class="btn btn-line" href={path(`/services/${service.slug}`)}>
                 Read more
                 <span class="arrow" aria-hidden="true">→</span>
               </a>
@@ -114,23 +115,23 @@ const shown = reviews.filter((review) => review.stars === 5).slice(0, 3);
         <p class="sub">We do not publish fake project photos. The workshop picture is the Street View Google shows for this listing. The other pictures are illustrations.</p>
       </div>
       <div class="work-grid" style="margin-top:1.3rem">
-        <a class="work-card" href="/projects">
-          <img src="/images/workshop.webp" width="1600" height="900" alt="Google Street View of industrial units on Singer Way, Kempston." loading="lazy" />
+        <a class="work-card" href={path('/projects')}>
+          <img src={path('/images/workshop.webp')} width="1600" height="900" alt="Google Street View of industrial units on Singer Way, Kempston." loading="lazy" />
           <div class="cap">
             <h3>18 Singer Way</h3>
             <p>The workshop on the Woburn Road Industrial Estate. This is the photo on the Google listing.</p>
           </div>
         </a>
         <div class="card-grid">
-          <a class="work-card" href="/services/electrical-installation">
-            <img src="/images/board.webp" width="1400" height="900" alt="" loading="lazy" />
+          <a class="work-card" href={path('/services/electrical-installation')}>
+            <img src={path('/images/board.webp')} width="1400" height="900" alt="" loading="lazy" />
             <div class="cap">
               <h3>Installation</h3>
               <p>The trade named at Companies House.</p>
             </div>
           </a>
-          <a class="work-card" href="/services/repairs">
-            <img src="/images/checking-board.webp" width="1400" height="933" alt="" loading="lazy" />
+          <a class="work-card" href={path('/services/repairs')}>
+            <img src={path('/images/checking-board.webp')} width="1400" height="933" alt="" loading="lazy" />
             <div class="cap">
               <h3>Repairs</h3>
               <p>Sockets, fans, and fault visits customers wrote about.</p>
@@ -152,7 +153,7 @@ const shown = reviews.filter((review) => review.stars === 5).slice(0, 3);
         <Reviews items={shown} />
       </div>
       <p class="center" style="margin-top:1rem">
-        <a class="btn btn-navy" href="/reviews">
+        <a class="btn btn-navy" href={path('/reviews')}>
           Read all the written reviews
           <span class="arrow" aria-hidden="true">→</span>
         </a>
@@ -209,7 +210,7 @@ const shown = reviews.filter((review) => review.stars === 5).slice(0, 3);
       </div>
       <div class="area-grid seven" style="margin-top:1.2rem">
         {areas.map((area) => (
-          <a class="area-card" href={`/areas/${area.slug}`} style="text-decoration:none">
+          <a class="area-card" href={path(`/areas/${area.slug}`)} style="text-decoration:none">
             <p class="kicker">{area.distance}</p>
             <h3>{area.name}</h3>
             <p>{area.direction}</p>

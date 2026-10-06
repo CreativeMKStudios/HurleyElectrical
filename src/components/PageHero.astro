@@ -1,4 +1,6 @@
 ---
+import { path as toPath } from '../lib/paths';
+
 interface Crumb { name: string; path: string }
 interface Props {
   eyebrow?: string;
@@ -15,7 +17,7 @@ const { eyebrow, title, lede, crumbs } = Astro.props;
       {crumbs.map((crumb, i) => (
         <>
           {i > 0 && <span aria-hidden="true">/</span>}
-          {i < crumbs.length - 1 ? <a href={crumb.path}>{crumb.name}</a> : <span>{crumb.name}</span>}
+          {i < crumbs.length - 1 ? <a href={toPath(crumb.path)}>{crumb.name}</a> : <span>{crumb.name}</span>}
         </>
       ))}
     </nav>

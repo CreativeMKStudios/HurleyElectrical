@@ -1,12 +1,13 @@
 ---
 import { address, addressLines, areas, hours, registeredOffice, services, site } from '../data/business';
+import { path } from '../lib/paths';
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
   <div class="wrap foot-grid">
     <div>
-      <a class="logo" href="/" style="margin-bottom:0.8rem">
+      <a class="logo" href={path('/')} style="margin-bottom:0.8rem">
         <svg viewBox="0 0 32 32" aria-hidden="true" width="38" height="38">
           <rect width="32" height="32" rx="8" fill="#e10600"></rect>
           <path fill="#fff" d="M18.2 3.2 10.4 17.2h5.2L12.6 28.8 23.2 13.4h-5.6L18.2 3.2z"></path>
@@ -28,17 +29,17 @@ const year = new Date().getFullYear();
       <h2>Services</h2>
       <ul>
         {services.map((service) => (
-          <li><a href={`/services/${service.slug}`}>{service.title}</a></li>
+          <li><a href={path(`/services/${service.slug}`)}>{service.title}</a></li>
         ))}
-        <li><a href="/projects">Projects</a></li>
-        <li><a href="/reviews">Reviews</a></li>
+        <li><a href={path('/projects')}>Projects</a></li>
+        <li><a href={path('/reviews')}>Reviews</a></li>
       </ul>
     </div>
     <div>
       <h2>Areas</h2>
       <ul>
         {areas.map((area) => (
-          <li><a href={`/areas/${area.slug}`}>{area.name}</a></li>
+          <li><a href={path(`/areas/${area.slug}`)}>{area.name}</a></li>
         ))}
       </ul>
     </div>
@@ -55,8 +56,8 @@ const year = new Date().getFullYear();
     <span>{site.legalName}. Company number {site.companyNumber}.</span>
     <span>Registered office: {registeredOffice.oneLine}.</span>
     <span>Workshop: {addressLines()}.</span>
-    <a href="/privacy">Privacy</a>
-    <a href="/cookies">Cookies</a>
+    <a href={path('/privacy')}>Privacy</a>
+    <a href={path('/cookies')}>Cookies</a>
     <a href={site.companiesHouse}>Companies House</a>
     <a href={site.googleMaps}>Google listing</a>
     <span>© {year} {site.name}</span>

@@ -2,8 +2,9 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://www.hurleyltd.co.uk',
-  trailingSlash: 'never',
+  site: 'https://creativemkstudios.github.io',
+  base: '/HurleyElectrical',
+  trailingSlash: 'always',
   integrations: [
     sitemap({
       filter: (page) => !page.includes('/contact/thanks'),

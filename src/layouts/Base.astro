@@ -7,6 +7,7 @@ import '@fontsource/source-sans-3/latin-600.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { site } from '../data/business';
+import { abs, path as toPath } from '../lib/paths';
 import { breadcrumbSchema, electricianSchema, graph, webPageSchema } from '../lib/schema';
 
 interface Crumb {
@@ -25,7 +26,7 @@ interface Props {
 }
 
 const { title, description, path, crumbs = [], extraSchema = [], noindex = false, home = false } = Astro.props;
-const canonical = new URL(path, site.url).href;
+const canonical = abs(path);
 const fullTitle = title.includes(site.name) ? title : `${title} | ${site.name}`;
 const nodes = [
   electricianSchema(),
@@ -50,10 +51,10 @@ const jsonLd = graph(nodes);
     <meta name="geo.placename" content="Kempston" />
     <link rel="alternate" hreflang="en-gb" href={canonical} />
     <link rel="alternate" hreflang="x-default" href={canonical} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="icon" href={toPath('/favicon.svg')} type="image/svg+xml" />
+    <link rel="icon" href={toPath('/favicon-32.png')} type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href={toPath('/favicon.png')} />
+    <link rel="manifest" href={toPath('/site.webmanifest')} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_GB" />
     <meta property="og:site_name" content={site.name} />
@@ -97,7 +98,8 @@ const jsonLd = graph(nodes);
           const data = new FormData(form);
           if (String(data.get('_honey') || '').trim()) {
             event.preventDefault();
-            window.location.href = '/contact/thanks';
+            const next = form.querySelector('input[name="_next"]');
+            window.location.href = next && next.value ? next.value : '/contact/thanks';
             return;
           }
           const name = String(data.get('name') || '').trim();
@@ -121,7 +123,8 @@ const jsonLd = graph(nodes);
               body: JSON.stringify(payload),
             });
             if (!response.ok) throw new Error('not ok');
-            window.location.href = '/contact/thanks';
+            const next = form.querySelector('input[name="_next"]');
+            window.location.href = next && next.value ? next.value : '/contact/thanks';
           } catch (err) {
             if (button) button.disabled = false;
             if (error) {
