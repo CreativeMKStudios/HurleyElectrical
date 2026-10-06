@@ -1,0 +1,239 @@
+---
+import Base from '../layouts/Base.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Reviews from '../components/Reviews.astro';
+import { areas, faqs, hours, people, reviews, services, site, steps } from '../data/business';
+import { faqSchema } from '../lib/schema';
+
+const title = 'Electrician in Kempston and Bedford';
+const description = site.description;
+const shown = reviews.filter((review) => review.stars === 5).slice(0, 3);
+---
+
+<Base title={title} description={description} path="/" home extraSchema={[faqSchema()]}>
+  <section class="hero">
+    <img class="bg" src="/images/hero.webp" width="1600" height="1067" alt="An electrician in a hard hat working on an outdoor electrical box. Illustration, not a Hurley staff photo." fetchpriority="high" />
+    <div class="shade"></div>
+    <div class="wrap hero-copy">
+      <p class="eyebrow">Kempston · Bedford · MK42</p>
+      <h1>Electrician<br /><em>in Kempston</em></h1>
+      <p class="lede">
+        Hurley Electrical works from Singer Way in Kempston. We install electrical systems, fix faults, and service emergency lighting for homes and other buildings nearby.
+      </p>
+      <div class="hero-actions">
+        <a class="btn" href="#quote">
+          Request a quote
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="btn btn-ghost" href={`tel:${site.phoneTel}`}>Call {site.phoneDisplay}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="overlap" aria-label="Hours and quote">
+    <div class="wrap overlap-grid">
+      <div class="panel panel-dark">
+        <h2>Working hours</h2>
+        <dl class="hours">
+          {hours.map((day) => (
+            <div>
+              <dt>{day}</dt>
+              <dd>Open 24 hours</dd>
+            </div>
+          ))}
+        </dl>
+        <p class="hours-note">These hours are what Google lists. They are not a promise of a set arrival time. Phone us and we will tell you when we can come.</p>
+      </div>
+      <QuoteForm id="quote" heading="Tell us about the job" />
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      {Array.from({ length: 2 }).map(() => (
+        <>
+          <span>Quality workmanship</span>
+          <span>✦</span>
+          <span>Emergency lighting</span>
+          <span>✦</span>
+          <span>Kempston and Bedford</span>
+          <span>✦</span>
+          <span>18 Singer Way</span>
+          <span>✦</span>
+        </>
+      ))}
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">What we do</p>
+      <h2>Electrical work from Singer Way</h2>
+      <p class="sub">Three lines of work we can stand behind. Each one is tied to the company record or to what customers wrote.</p>
+      <div class="service-list" style="margin-top:1.4rem">
+        {services.map((service, index) => (
+          <article class:list={['service-row', index % 2 === 1 && 'reverse']}>
+            <img src={service.image} width={service.width} height={service.height} alt={service.alt} loading="lazy" />
+            <div class="service-copy">
+              <h3>{service.title}</h3>
+              <p>{service.short}</p>
+              <ul class="ticks">
+                {service.points.map((point) => (
+                  <li>
+                    <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="8" fill="#e10600"/><path d="M4.5 8.2 6.7 10.4 11.5 5.6" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg>
+                    {point}
+                  </li>
+                ))}
+              </ul>
+              <a class="btn btn-line" href={`/services/${service.slug}`}>
+                Read more
+                <span class="arrow" aria-hidden="true">→</span>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap facts">
+      <div><strong>2007</strong><span>Company incorporated on 4 October</span></div>
+      <div><strong>06389639</strong><span>Companies House number</span></div>
+      <div><strong>BSI listed</strong><span>Emergency lighting servicing, KM 689027</span></div>
+      <div><strong>bpha</strong><span>Named on our old site, and in a Google review</span></div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="center">
+        <p class="eyebrow">On the tools</p>
+        <h2>The work, without made-up jobs</h2>
+        <p class="sub">We do not publish fake project photos. The workshop picture is the Street View Google shows for this listing. The other pictures are illustrations.</p>
+      </div>
+      <div class="work-grid" style="margin-top:1.3rem">
+        <a class="work-card" href="/projects">
+          <img src="/images/workshop.webp" width="1600" height="900" alt="Google Street View of industrial units on Singer Way, Kempston." loading="lazy" />
+          <div class="cap">
+            <h3>18 Singer Way</h3>
+            <p>The workshop on the Woburn Road Industrial Estate. This is the photo on the Google listing.</p>
+          </div>
+        </a>
+        <div class="card-grid">
+          <a class="work-card" href="/services/electrical-installation">
+            <img src="/images/board.webp" width="1400" height="900" alt="" loading="lazy" />
+            <div class="cap">
+              <h3>Installation</h3>
+              <p>The trade named at Companies House.</p>
+            </div>
+          </a>
+          <a class="work-card" href="/services/repairs">
+            <img src="/images/checking-board.webp" width="1400" height="933" alt="" loading="lazy" />
+            <div class="cap">
+              <h3>Repairs</h3>
+              <p>Sockets, fans, and fault visits customers wrote about.</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="center">
+        <p class="eyebrow">Google reviews</p>
+        <h2>3.5 out of 5, from 15 ratings</h2>
+        <p class="sub">That is the live Google score, not a perfect five. Some customers were very pleased. Others were not. Read both.</p>
+      </div>
+      <div style="margin-top:1.2rem">
+        <Reviews items={shown} />
+      </div>
+      <p class="center" style="margin-top:1rem">
+        <a class="btn btn-navy" href="/reviews">
+          Read all the written reviews
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="center">
+        <p class="eyebrow">The company</p>
+        <h2>Names we can confirm</h2>
+        <p class="sub">No stock photos dressed up as the team. These are the people named in public records.</p>
+      </div>
+      <div class="people three" style="margin-top:1.2rem">
+        {people.map((person) => (
+          <article class="person">
+            <div class="mono" aria-hidden="true">{person.name.split(' ').map((part) => part[0]).slice(0, 2).join('')}</div>
+            <h3>{person.name}</h3>
+            <p class="role">{person.role}</p>
+            <p>{person.note}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="center">
+        <p class="eyebrow">From the first call</p>
+        <h2>How a job starts</h2>
+      </div>
+      <div class="steps" style="margin-top:1.2rem">
+        {steps.map((step) => (
+          <article class="step">
+            <div class="icon-row">
+              <span class="n">{step.n}</span>
+            </div>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="center">
+        <p class="eyebrow">Local</p>
+        <h2>Places near the workshop</h2>
+        <p class="sub">Distances are straight-line, from 18 Singer Way. They are a guide, not a driving time. Call and ask.</p>
+      </div>
+      <div class="area-grid seven" style="margin-top:1.2rem">
+        {areas.map((area) => (
+          <a class="area-card" href={`/areas/${area.slug}`} style="text-decoration:none">
+            <p class="kicker">{area.distance}</p>
+            <h3>{area.name}</h3>
+            <p>{area.direction}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0">
+    <div class="wrap">
+      <div class="center">
+        <h2>Questions people ask</h2>
+      </div>
+      <div class="faq" style="margin-top:1rem">
+        {faqs.map((item) => (
+          <details>
+            <summary>{item.q}</summary>
+            <p>{item.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>

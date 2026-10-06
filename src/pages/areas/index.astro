@@ -1,0 +1,37 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { areas, site } from '../../data/business';
+
+const title = 'Areas we cover from Kempston';
+const description = 'Hurley Electrical is based at 18 Singer Way, Kempston. Nearby places include Bedford, Great Denham, Elstow, Biddenham, Wootton, and Bromham. Call to check.';
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Areas', path: '/areas' },
+];
+---
+
+<Base title={title} description={description} path="/areas" crumbs={crumbs}>
+  <PageHero
+    eyebrow="Local"
+    title="Areas around the workshop"
+    lede="We are based in Kempston. The places below are a few miles away, in a straight line. None of them is a promise that we will take every job."
+    crumbs={crumbs}
+  />
+  <section class="section">
+    <div class="wrap">
+      <div class="area-grid seven">
+        {areas.map((area) => (
+          <a class="area-card" href={`/areas/${area.slug}`} style="text-decoration:none">
+            <p class="kicker">{area.distance}</p>
+            <h2 style="font-size:1.4rem;margin:0 0 0.3rem">{area.name}</h2>
+            <p>{area.lede}</p>
+          </a>
+        ))}
+      </div>
+      <p style="margin-top:1.2rem">Outside this list? Phone {site.phoneDisplay} and ask. We will say yes or no.</p>
+    </div>
+  </section>
+  <CtaBand />
+</Base>

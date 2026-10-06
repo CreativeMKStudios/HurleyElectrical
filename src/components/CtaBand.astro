@@ -1,0 +1,24 @@
+---
+import { site } from '../data/business';
+---
+
+<section class="section" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta">
+      <img src="/images/workshop.webp" width="1600" height="900" alt="" />
+      <div class="shade"></div>
+      <div class="cta-copy">
+        <p class="eyebrow">Singer Way, Kempston</p>
+        <h2>Ready to talk about a job?</h2>
+        <p>Call {site.phoneDisplay}, or send the form. Tell us the address. We will say if we can take the work.</p>
+        <div class="hero-actions">
+          <a class="btn" href="/contact">
+            Request a quote
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+          <a class="btn btn-ghost" href={`tel:${site.phoneTel}`}>{site.phoneDisplay}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

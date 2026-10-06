@@ -1,0 +1,57 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { people, registeredOffice, site } from '../data/business';
+
+const title = 'About Hurley Electrical';
+const description = 'Hurley Electrical Contractors Limited, number 06389639, works from 18 Singer Way, Kempston. Incorporated in 2007. Read the directors, the BSI listing, and the bpha note.';
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'About', path: '/about' },
+];
+---
+
+<Base title={title} description={description} path="/about" crumbs={crumbs}>
+  <PageHero
+    eyebrow="Kempston since 2007"
+    title="About us"
+    lede="A Kempston electrical contractor. The facts below come from Companies House, Google, our old website, and the BSI directory."
+    crumbs={crumbs}
+  />
+  <section class="section">
+    <div class="wrap prose" style="grid-template-columns: 1fr; max-width: 760px">
+      <p>{site.tagline}</p>
+      <p>That line is from our own old website. The site was a single picture for years, and it sat at hurleyltd.co.uk. The picture also gave the Singer Way address, the phone number, and a note that we work in partnership with bpha.</p>
+      <h2>The company</h2>
+      <p>Hurley Electrical is the name on the Google listing. The limited company is Hurley Electrical Contractors Limited, number {site.companyNumber}. It was incorporated on {site.incorporated}. Companies House lists the nature of the business as electrical installation.</p>
+      <p>The workshop address, on Google and on that old website, is 18 Singer Way, Woburn Road Industrial Estate, Kempston, Bedford, MK42 7AE. Write to us there about a job, or phone {site.phoneDisplay}.</p>
+      <p>The registered office is not the workshop. Companies House has it as {registeredOffice.oneLine}. An earlier registered office was also in Kempston, at 2 Woburn Court, Railton Road. That was a filing address too.</p>
+      <h2>Who is named</h2>
+      <div class="people three">
+        {people.map((person) => (
+          <article class="person">
+            <div class="mono" aria-hidden="true">{person.name.split(' ').map((part) => part[0]).slice(0, 2).join('')}</div>
+            <h3>{person.name}</h3>
+            <p class="role">{person.role}</p>
+            <p>{person.note}</p>
+          </article>
+        ))}
+      </div>
+      <p>A 2021 review also thanks Jamie Collins for work on a job. We have not listed Jamie as current staff, because a review is not a staff record.</p>
+      <h2>bpha</h2>
+      <p>bpha is the housing association in Bedford. Our old website said “in partnership with bpha”. A Google review from Colin Allen says we are contractors for bpha, doing repairs and checks on communal lighting. The same review complains that lights were left off. Both facts are on the record. The review is printed in full on the reviews page.</p>
+      <h2>Certificates</h2>
+      <p>The old website showed an NICEIC Approved Contractor logo. When this site was built, a current NICEIC listing was not confirmed. Do not treat that old logo as a live membership. Ask us which certificate your job will get, and who will sign it, before we start.</p>
+      <p>The BSI directory does list Hurley Ltd of Kempston for the servicing of emergency lighting. The standards named are SP203-4 version 2.2, BS 5266-1:2016, BS EN 1838:2013, and BS EN 50172:2004. The licence on that page is {site.bsiLicence}. The email on the listing is {site.bsiEmail}. Listings can lapse, so check BSI if you need that scope.</p>
+      <h2>Where these facts come from</h2>
+      <ul class="source-list">
+        <li><a href={site.companiesHouse}>Companies House, company {site.companyNumber}</a></li>
+        <li><a href={site.googleMaps}>Google listing for Hurley Electrical</a></li>
+        <li><a href={site.bsiListing}>BSI product directory, licence {site.bsiLicence}</a></li>
+        <li>The company’s old homepage at hurleyltd.co.uk, archived by the Internet Archive</li>
+      </ul>
+    </div>
+  </section>
+  <CtaBand />
+</Base>

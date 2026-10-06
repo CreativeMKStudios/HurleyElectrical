@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Reviews from '../components/Reviews.astro';
+import { reviews, site } from '../data/business';
+
+const title = 'Google reviews';
+const description = 'Hurley Electrical has a Google score of 3.5 out of 5 from 15 ratings. Read the written reviews, including the critical ones, and the link to the live listing.';
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Reviews', path: '/reviews' },
+];
+---
+
+<Base title={title} description={description} path="/reviews" crumbs={crumbs}>
+  <PageHero
+    eyebrow="Google"
+    title="Reviews"
+    lede="The score on Google is 3.5 out of 5, from 15 ratings. Below are the written reviews we could read. Wording is unchanged."
+    crumbs={crumbs}
+  />
+  <section class="section">
+    <div class="wrap">
+      <div class="score">
+        <b>3.5</b>
+        <div>
+          <strong>out of 5, from 15 Google ratings</strong>
+          <p style="margin:0.2rem 0 0">Scores move. This figure is from the Google listing. Some of the 15 ratings have no comment, so they are not copied here. <a href={site.googleMaps}>Open the live listing</a>.</p>
+        </div>
+      </div>
+      <Reviews items={reviews} />
+      <p style="margin-top:1rem">We have not added review stars in the page code that Google uses for search results. Google asks businesses not to mark up their own reviews that way. The stars you see are the ones the customers gave.</p>
+    </div>
+  </section>
+</Base>
