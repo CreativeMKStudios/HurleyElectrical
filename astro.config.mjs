@@ -2,8 +2,7 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://creativemkstudios.github.io',
-  base: '/HurleyElectrical',
+  site: 'https://hurley-electrical.surge.sh',
   trailingSlash: 'always',
   integrations: [
     sitemap({
