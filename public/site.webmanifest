@@ -2,7 +2,7 @@
   "name": "Hurley Electrical",
   "short_name": "Hurley",
   "description": "Electrician in Kempston and Bedford. Workshop at 18 Singer Way.",
-  "start_url": "/HurleyElectrical/",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#0e1624",
   "theme_color": "#0e1624",

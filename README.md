@@ -16,7 +16,7 @@ npm run build
 npm run preview
 ```
 
-The canonical site URL is set in `astro.config.mjs` as `https://www.hurleyltd.co.uk`.
+The public site is https://hurley-electrical.surge.sh. That address is set in `astro.config.mjs`.
 
 ## Facts
 
